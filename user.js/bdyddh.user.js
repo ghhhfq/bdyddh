@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name              百度网盘直链下载助手F
+// @name              百度网盘直链下载助手-F修改版
 // @namespace         https://github.com/syhyz1990/baiduyun
 // @version           3.0.3
 // @icon              https://www.baiduyun.wiki/48x48.png
-// @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴插件，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持远程下载，告别下载限速问题。
+// @description       【百度网盘直链下载助手-F修改版】是一款免客户端获取百度网盘文件真实下载地址的油猴插件，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持远程下载，告别下载限速问题。
 // @author            syhyz1990, ghhhfq
 // @license           AGPL
 // @match             *://pan.baidu.com/disk/home*
@@ -28,6 +28,14 @@
 // @grant             GM_unregisterMenuCommand
 // ==/UserScript==
 
+// 主要调整如下：
+// 增加BDUSS的配置，并去掉使用“网盘万能助手”相关部分
+// 修改按钮名称为“下载助手F”以示区分
+// 去掉从github读取信息
+// 去掉版本升级检测，神秘代码（暗号），固定“开启广告”配置为关，去掉升级弹出和广告弹出
+// 去掉固定的广告或统计js：https://js.users.51.la/19988117.js
+// aria-rpc调整，不去获取url传递给aria，而是直接传递原始url和cookie
+
 "use strict";
 var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
     return typeof t;
@@ -45,7 +53,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
 
     function i(t, i, n) {
         var a = e();
-        return n = n || b, a ? 'aria2c "' + t + '" --out "' + i + '" --header "User-Agent: ' + n + '" --header "Cookie: BDUSS=' + a + '"' : "请先安装网盘万能助手，安装后请重启浏览器！！！";
+        return n = n || b, a ? 'aria2c "' + t + '" --out "' + i + '" --header "User-Agent: ' + n + '" --header "Cookie: BDUSS=' + a + '"' : "出错了，不可能出现这个！！！";
     }
 
     function n(t) {
@@ -82,12 +90,14 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 t.target.innerText && Z(t.target.innerText);
             }), $(document).on("click", ".aria-rpc", function (t) {
                 var e = (t.target.dataset.link, t.target.dataset.filename), i = {};
-                j() || (i = {"User-Agent": b}), GM_xmlhttpRequest({
+                j() || (i = {"User-Agent": b});
+                /*GM_xmlhttpRequest({
                     method: "HEAD",
                     headers: i,
                     url: t.target.dataset.link,
-                    onload: function (t) {
-                        var i = t.finalUrl;
+                    onload: function (t) */{
+                        //var i = t.finalUrl;
+                        var i = t.target.dataset.link;
                         if (i) {
                             var n = x.domain + ":" + x.port + "/jsonrpc", a = {
                                 id: (new Date).getTime(),
@@ -96,7 +106,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                                 params: ["token:" + x.token, [i], {
                                     dir: x.dir,
                                     out: e,
-                                    header: j() ? ["User-Agent:" + y] : ["User-Agent:" + b]
+                                    header: ["User-Agent:" + j() ? y : b, "Cookie:BDUSS=" + x.bduss]
                                 }]
                             };
                             GM_xmlhttpRequest({
@@ -119,7 +129,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                             });
                         }
                     }
-                });
+                /*});*/
             });
         }
 
@@ -356,7 +366,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 gt.open({title: "Aria链接", type: "batchAria", list: rt, tip: a, showcopy: !0});
             }
             if (-1 != i.indexOf("rpc")) {
-                if (rt = V(n), a = '点击按钮发送链接至Aria下载器中，支持本地和远程下载，此功能建议配合百度会员使用', 0 === rt.length) return void swal("没有链接可以显示，不要选中文件夹！");
+                if (rt = V(n), a = '点击按钮发送链接至Aria下载器中，支持本地和远程下载', 0 === rt.length) return void swal("没有链接可以显示，不要选中文件夹！");
                 gt.open({title: "Aria RPC", type: "batchAriaRPC", list: rt, tip: a, showcopy: !1});
             }
             if (-1 != i.indexOf("api")) {
@@ -736,18 +746,19 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         function T() {
             $(document).on("click", ".aria-rpc", function (t) {
                 var e = (t.target.dataset.link, t.target.dataset.filename);
-                GM_xmlhttpRequest({
+                /*GM_xmlhttpRequest({
                     method: "HEAD",
                     headers: {"User-Agent": b},
                     url: t.target.dataset.link,
-                    onload: function (t) {
-                        var i = t.finalUrl;
+                    onload: function (t) */{
+                        //var i = t.finalUrl;
+                        var i = t.target.dataset.link;
                         if (i) {
                             var n = x.domain + ":" + x.port + "/jsonrpc", a = {
                                 id: (new Date).getTime(),
                                 jsonrpc: "2.0",
                                 method: "aria2.addUri",
-                                params: ["token:" + x.token, [i], {dir: x.dir, out: e, header: ["User-Agent:" + b]}]
+                                params: ["token:" + x.token, [i], {dir: x.dir, out: e, header: ["User-Agent:" + b, "Cookie:BDUSS=" + x.bduss]}]
                             };
                             GM_xmlhttpRequest({
                                 method: "POST",
@@ -769,7 +780,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                             });
                         }
                     }
-                });
+                /*});*/
             });
         }
 
@@ -980,7 +991,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                     if (112 == t.errno) return swal("页面过期，请刷新重试"), !1;
                     if (0 === t.errno) if ("rpc" === e.target.dataset.type) {
                         bt.open({
-                            title: "下载链接（仅显示文件链接）",
+                            title: "Aria RPC",
                             type: "rpcLink",
                             list: t.list,
                             tip: '点击按钮发送链接至Aria下载器中，支持本地和远程下载',
@@ -1145,7 +1156,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                     var s = i(n.downloadlink, n.filename, y);
                     a = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + n.filename + '">' + n.filename + '</div><span>：</span><a href="javascript:;" class="aria2c-link">' + s + "</a></div>");
                 }
-                "batch" == t.type && (a = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + n.filename + '">' + n.filename + '</div><span>：</span><a href="' + n.downloadlink + '">' + n.downloadlink + "</a></div>")), "batchAriaRPC" == t.type && (a = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + n.filename + '">' + n.filename + '</div><span>：</span><button class="aria-rpc" data-link="' + n.downloadlink + '" data-filename="' + n.filename + '">点击发送到Aria</button></div>')), $("div.dialog-body", o).append(a);
+                "batch" == t.type && (a = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + n.filename + '">' + n.filename + '</div><span>：</span><a href="' + n.downloadlink + '">' + n.downloadlink + "</a></div>")), "batchAriaRPC" == t.type && (a = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + n.filename + ':' + n.downloadlink + '">' + n.filename + '</div><span>：batch：</span><button class="aria-rpc" data-link="' + n.downloadlink + '" data-filename="' + n.filename + '">点击发送到Aria</button></div>')), $("div.dialog-body", o).append(a);
             })), "shareLink" == t.type && (e = t.list, $("div.dialog-header h3 span.dialog-title", o).text(t.title), $.each(t.list, function (t, e) {
                 if (e.dlink = n(e.dlink), 1 != e.isdir) {
                     var i = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + e.server_filename + '">' + e.server_filename + '</div><span>：</span><a href="' + e.dlink + '" class="share-download">' + e.dlink + "</a></div>");
@@ -1153,7 +1164,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 }
             })), "rpcLink" == t.type && (e = t.list, $("div.dialog-header h3 span.dialog-title", o).text(t.title), $.each(t.list, function (t, e) {
                 if (e.dlink = n(e.dlink), 1 != e.isdir) {
-                    var i = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + e.server_filename + '">' + e.server_filename + '</div><span>：</span><button class="aria-rpc" data-link="' + e.dlink + '" data-filename="' + e.server_filename + '">点击发送到Aria</button></div>');
+                    var i = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:150px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + e.server_filename + ':' + e.dlink + '">' + e.server_filename + '</div><span>：link：</span><button class="aria-rpc" data-link="' + e.dlink + '" data-filename="' + e.server_filename + '">点击发送到Aria</button></div>');
                     $("div.dialog-body", o).append(i);
                 }
             })), "shareAriaLink" == t.type && (e = t.list, $("div.dialog-header h3 span.dialog-title", o).text(t.title), $.each(t.list, function (t, e) {
@@ -1263,6 +1274,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         function i() {
             GM_setValue("SETTING_A", 0),
             GM_setValue("lastest_version", "9.9.9"),
+            //b = navigator.userAgent,
             b = "LogStatistic",
             GM_setValue("init", 1),
             e();
