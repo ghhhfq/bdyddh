@@ -4,10 +4,8 @@
 // @version           3.0.3
 // @icon              https://www.baiduyun.wiki/48x48.png
 // @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴插件，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持远程下载，告别下载限速问题。
-// @author            syhyz1990
+// @author            syhyz1990, ghhhfq
 // @license           AGPL
-// @supportURL        https://github.com/syhyz1990/baiduyun
-// @updateURL         https://www.baiduyun.wiki/baiduyun.user.js
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -18,7 +16,6 @@
 // @require           https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js
 // @connect           baidu.com
 // @connect           baidupcs.com
-// @connect           *
 // @run-at            document-idle
 // @grant             unsafeWindow
 // @grant             GM_xmlhttpRequest
@@ -44,15 +41,6 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
 
     function e() {
         return x.bduss;
-        var t = localStorage.getItem("baiduyunPlugin_BDUSS") ? localStorage.getItem("baiduyunPlugin_BDUSS") : '{"baiduyunPlugin_BDUSS":""}',
-            e = JSON.parse(t).BDUSS;
-        return e || swal({
-            title: "提示",
-            text: "请先安装【网盘万能助手】",
-            buttons: {confirm: {text: "安装", value: "confirm"}}
-        }).then(function (t) {
-            "confirm" === t && (location.href = "https://www.baiduyun.wiki/zh-cn/assistant.html");
-        }), e;
     }
 
     function i(t, i, n) {
@@ -277,7 +265,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 x.toggleClass("button-open");
             }), S.click(P), A.click(D), G.click(E), M.click(I);
             var T = $('<span class="g-button-menu" style="display:block;cursor: pointer">分享选中文件</span>'),
-                j = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
+                j = $('');
             T.click(X), i.append(y).append(d).append(h).append(T).append(j), t.append(e).append(i), t.hover(function () {
                 t.toggleClass("button-open");
             }), $("." + f["list-tools"]).append(t), $("." + f["list-tools"]).css("height", "40px");
@@ -639,7 +627,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             a() ? ($("div.slide-show-right").css("width", "500px"), $("div.frame-main").css("width", "96%"), $("div.share-file-viewer").css("width", "740px").css("margin-left", "auto").css("margin-right", "auto")) : $("div.slide-show-right").css("width", "500px");
             var t = $('<span class="g-dropdown-button"></span>'),
                 e = $('<a class="g-button g-button-blue" style="width: 114px;" data-button-id="b200" data-button-index="200" href="javascript:;"></a>'),
-                i = $('<span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span>'),
+                i = $('<span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手F</span></span>'),
                 n = $('<span class="menu" style="width:auto;z-index:41"></span>'),
                 o = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:;">保存到网盘</a>'),
                 s = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:;" style="opacity: 0.8;">自定义保存路径</a>'),
@@ -1272,25 +1260,12 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             }
         }
 
-    function i() {
-      $.ajax({
-        url: "https://api.baiduyun.wiki/update?ver=" + h + "&a=" + ~~GM_getValue("SETTING_A"),
-        method: "GET",
-        success: function (t) {
-          200 === t.code && (GM_setValue("lastest_version", t.version), t.version > u && then(function (e) {
-            "confirm" === e && (location.href = t.updateURL);
-          })), t.scode != GM_getValue("scode") ? swal({
-            content: $('<div><input class="swal-content__input" id="scode" type="text" placeholder="首次使用请随便输入一串数字"></div>')[0],
-            closeOnClickOutside: !1,
-            button: {text: "确定", closeModal: !1}
-          }).then(function () {
-                        t.scode != $("#scode").val() ? (GM_setValue("scode", t.scode), GM_setValue("init", 1), setTimeout(function () {
-              history.go(0);
-            }, 1200)) : (GM_setValue("init", 1));
-          }) : e(), t.f && GM_setValue("SETTING_A", !0);
+        function i() {
+            GM_setValue("SETTING_A", 0),
+            GM_setValue("lastest_version", "9.9.9"),
+            GM_setValue("init", 1),
+            e();
         }
-      });
-    }
 
         function n() {
             setTimeout(function () {
@@ -1301,20 +1276,6 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }
 
         function s() {
-            switch (l()) {
-                case"disk":
-                    return GM_getValue("current_version") < GM_getValue("lastest_version") && $(".aside-absolute-container").append($('<img class="V6d3Fg" src="https://cdn.baiduyun.wiki/bd.png?t=' + Math.random() + '" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;cursor: pointer;max-width: 190px">')), void $(document).on("click", ".V6d3Fg", function () {
-                        GM_openInTab("http://pan.baiduyun.wiki/home", {active: !0});
-                    });
-                case"share":
-                case"s":
-                    var t = void 0, e = void 0;
-                    return $(".bd-aside").length > 0 ? (t = $(".bd-aside"), e = $('<img class="K5a8Tu" src="https://cdn.baiduyun.wiki/bds.png?t=' + Math.random() + '" style="cursor:pointer;margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;max-width: 215px">')) : (t = $("#layoutAside"), e = $('<img class="K5a8Tu" src="https://cdn.baiduyun.wiki/bds.png?t=' + Math.random() + '" style="cursor:pointer;margin: 10px 0;max-width: 215px">')), t.append(e), void $(document).on("click", ".K5a8Tu", function () {
-                        GM_openInTab("http://pan.baiduyun.wiki/share", {active: !0});
-                    });
-                default:
-                    return;
-            }
         }
 
         function d() {
@@ -1335,8 +1296,6 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
 
         function r() {
             f["default-dom"] = $(".icon-upload").parent().parent().parent().parent().parent().attr("class"), f.bar = $(".icon-upload").parent().parent().parent().parent().attr("class");
-            var t = document.createElement("script");
-            t.type = "text/javascript", t.async = !0, t.src = "https://js.users.51.la/19988117.js", document.getElementsByTagName("head")[0].appendChild(t);
             var e = document.createElement("meta");
             e.httpEquiv = "Content-Security-Policy", e.content = "upgrade-insecure-requests", document.getElementsByTagName("head")[0].appendChild(e), $(document).on("contextmenu", ".aria2c-link", function (t) {
                 return t.preventDefault(), !1;
