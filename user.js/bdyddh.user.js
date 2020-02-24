@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name              百度网盘直链下载助手
+// @name              百度网盘直链下载助手F
 // @namespace         https://github.com/syhyz1990/baiduyun
 // @version           3.0.3
 // @icon              https://www.baiduyun.wiki/48x48.png
@@ -43,6 +43,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
     }
 
     function e() {
+        return x.bduss;
         var t = localStorage.getItem("baiduyunPlugin_BDUSS") ? localStorage.getItem("baiduyunPlugin_BDUSS") : '{"baiduyunPlugin_BDUSS":""}',
             e = JSON.parse(t).BDUSS;
         return e || swal({
@@ -237,7 +238,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         function T() {
             $("div." + f["bar-search"]).css("width", "18%");
             var t = $('<span class="g-dropdown-button"></span>'),
-                e = $('<a class="g-button g-button-blue" href="javascript:;"><span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span></a>'),
+                e = $('<a class="g-button g-button-blue" href="javascript:;"><span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手F</span></span></a>'),
                 i = $('<span class="menu" style="width:114px"></span>'),
                 n = $('<span class="g-button-menu" style="display:block"></span>'),
                 a = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>'),
@@ -284,10 +285,19 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
 
         function C() {
             var t = "";
-            t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcDomain" style="margin-right: 5px;flex: 0 0 90px;">主机：</label><input type="text" id="rpcDomain" value="' + x.domain + '" class="swal-content__input" placeholder="http://localhost"></div>', t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcPort" style="margin-right: 5px;flex: 0 0 90px;">端口：</label><input type="number" id="rpcPort" value="' + x.port + '" class="swal-content__input" placeholder="6800"></div>', t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcToken" style="margin-right: 5px;flex: 0 0 90px;">密钥：</label><input type="text" id="rpcToken" value="' + x.token + '" class="swal-content__input" placeholder="没有留空"></div>', t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcDir" style="margin-right: 5px;flex: 0 0 90px;">下载路径：</label><input type="text" id="rpcDir" value="' + x.dir + '" class="swal-content__input" placeholder="默认为D:"></div>', t = "<div>" + t + "</div>";
+            t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcDomain" style="margin-right: 5px;flex: 0 0 90px;">主机：</label><input type="text" id="rpcDomain" value="' + x.domain + '" class="swal-content__input" placeholder="http://localhost"></div>',
+                t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcPort" style="margin-right: 5px;flex: 0 0 90px;">端口：</label><input type="number" id="rpcPort" value="' + x.port + '" class="swal-content__input" placeholder="6800"></div>',
+                t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcToken" style="margin-right: 5px;flex: 0 0 90px;">密钥：</label><input type="text" id="rpcToken" value="' + x.token + '" class="swal-content__input" placeholder="没有留空"></div>',
+                t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcDir" style="margin-right: 5px;flex: 0 0 90px;">下载路径：</label><input type="text" id="rpcDir" value="' + x.dir + '" class="swal-content__input" placeholder="默认为D:"></div>',
+                t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="mybduss" style="margin-right: 5px;flex: 0 0 90px;">BDUSS：</label><input type="text" id="mybduss" value="' + x.bduss + '" class="swal-content__input" placeholder=""></div>',
+                t = "<div>" + t + "</div>";
             var e = $(t);
             swal({title: "RPC配置", closeOnClickOutside: !1, content: e[0], button: {text: "保存"}}).then(function () {
-                GM_setValue("rpcDomain", $("#rpcDomain").val() ? $("#rpcDomain").val() : x.domain), GM_setValue("rpcPort", $("#rpcPort").val() ? $("#rpcPort").val() : x.port), GM_setValue("rpcToken", $("#rpcToken").val()), GM_setValue("rpcDir", $("#rpcDir").val() ? $("#rpcDir").val() : x.dir), history.go(0), swal({
+                GM_setValue("rpcDomain", $("#rpcDomain").val() ? $("#rpcDomain").val() : x.domain),
+                GM_setValue("rpcPort", $("#rpcPort").val() ? $("#rpcPort").val() : x.port),
+                GM_setValue("rpcToken", $("#rpcToken").val()),
+                GM_setValue("rpcDir", $("#rpcDir").val() ? $("#rpcDir").val() : x.dir),
+                GM_setValue("mybduss", $("#mybduss").val() ? $("#mybduss").val() : x.bduss), history.go(0), swal({
                     text: "保存成功",
                     timer: 800
                 });
@@ -1262,35 +1272,25 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             }
         }
 
-        function i() {
-            $.ajax({
-                url: "https://api.baiduyun.wiki/update?ver=" + h, method: "GET", success: function (t) {
-                    GM_setValue("lastest_version", t.version), b = t.ua, 200 === t.code && t.version > h && swal({
-                        title: "发现新版本",
-                        text: t.changelog,
-                        buttons: {confirm: {text: "更新", value: "confirm"}}
-                    }).then(function (e) {
-                        "confirm" === e && (location.href = t.updateURL);
-                    }), t.scode != GM_getValue("scode") ? swal({
-                        title: "初次使用请输入暗号",
-                        content: $('<div><img style="width: 200px;margin-bottom: 10px;" src="https://cdn.baiduyun.wiki/scode.png"><input class="swal-content__input" id="scode" type="text" placeholder="请输入暗号，可扫描上方二维码免费获取!"></div>')[0],
-                        closeOnClickOutside: !1,
-                        button: {text: "确定", closeModal: !1}
-                    }).then(function () {
-                        t.scode == $("#scode").val() ? (GM_setValue("scode", t.scode), GM_setValue("init", 1), swal({
-                            text: "暗号正确，正在初始化。。。",
-                            icon: "success"
-                        }), setTimeout(function () {
-                            history.go(0);
-                        }, 1e3)) : (GM_setValue("init", 0), swal({
-                            title: "🔺🔺🔺",
-                            text: "暗号不正确，请通过微信扫码免费获取",
-                            icon: "https://cdn.baiduyun.wiki/scode.png"
-                        }));
-                    }) : e(), t.f && GM_setValue("SETTING_A", !0);
-                }
-            });
+    function i() {
+      $.ajax({
+        url: "https://api.baiduyun.wiki/update?ver=" + h + "&a=" + ~~GM_getValue("SETTING_A"),
+        method: "GET",
+        success: function (t) {
+          200 === t.code && (GM_setValue("lastest_version", t.version), t.version > u && then(function (e) {
+            "confirm" === e && (location.href = t.updateURL);
+          })), t.scode != GM_getValue("scode") ? swal({
+            content: $('<div><input class="swal-content__input" id="scode" type="text" placeholder="首次使用请随便输入一串数字"></div>')[0],
+            closeOnClickOutside: !1,
+            button: {text: "确定", closeModal: !1}
+          }).then(function () {
+                        t.scode != $("#scode").val() ? (GM_setValue("scode", t.scode), GM_setValue("init", 1), setTimeout(function () {
+              history.go(0);
+            }, 1200)) : (GM_setValue("init", 1));
+          }) : e(), t.f && GM_setValue("SETTING_A", !0);
         }
+      });
+    }
 
         function n() {
             setTimeout(function () {
@@ -1392,7 +1392,8 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             domain: GM_getValue("rpcDomain") ? GM_getValue("rpcDomain") : "http://localhost",
             port: GM_getValue("rpcPort") ? GM_getValue("rpcPort") : 6800,
             token: GM_getValue("rpcToken") ? GM_getValue("rpcToken") : "",
-            dir: GM_getValue("rpcDir") ? GM_getValue("rpcDir") : "D:/"
+            dir: GM_getValue("rpcDir") ? GM_getValue("rpcDir") : "D:/",
+            bduss: GM_getValue("mybduss") ? GM_getValue("mybduss") : "BDUSS"
         };
     $(function () {
         (new u).init();
