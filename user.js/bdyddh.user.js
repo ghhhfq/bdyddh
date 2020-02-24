@@ -347,20 +347,20 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                     title: "直链下载",
                     type: "batch",
                     list: rt,
-                    tip: '点击链接直接下载，请先升级 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a> 至 <b>v2.2.0</b>，本链接仅支持小文件下载（<300M）',
+                    tip: '点击链接直接下载，本链接仅支持小文件下载（<300M）',
                     showcopy: !1
                 });
             }
             if (-1 != i.indexOf("aria")) {
-                if (rt = V(n), a = '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a href="http://pan.baiduyun.wiki/down">XDown</a>', 0 === rt.length) return void swal("没有链接可以显示，不要选中文件夹！");
+                if (rt = V(n), a = '请将链接复制到支持Aria的下载器中, 推荐使用XDown', 0 === rt.length) return void swal("没有链接可以显示，不要选中文件夹！");
                 gt.open({title: "Aria链接", type: "batchAria", list: rt, tip: a, showcopy: !0});
             }
             if (-1 != i.indexOf("rpc")) {
-                if (rt = V(n), a = '点击按钮发送链接至Aria下载器中<a href="https://www.baiduyun.wiki/zh-cn/rpc.html">详细说明</a>，需配合最新版 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a>，支持本地和远程下载，此功能建议配合百度会员使用', 0 === rt.length) return void swal("没有链接可以显示，不要选中文件夹！");
+                if (rt = V(n), a = '点击按钮发送链接至Aria下载器中，支持本地和远程下载，此功能建议配合百度会员使用', 0 === rt.length) return void swal("没有链接可以显示，不要选中文件夹！");
                 gt.open({title: "Aria RPC", type: "batchAriaRPC", list: rt, tip: a, showcopy: !1});
             }
             if (-1 != i.indexOf("api")) {
-                if (rt = V(n), a = '请先安装 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">网盘万能助手</a> <b>v2.2.0</b> 后点击链接下载，若下载失败，请更换神秘代码 <a href="https://www.baiduyun.wiki/zh-cn/question.html" target="_blank">获取神秘代码</a>', 0 === rt.length) return void swal("没有链接可以显示，API链接不要全部选中文件夹！");
+                if (rt = V(n), a = '点击链接下载，若下载失败，请更换神秘代码', 0 === rt.length) return void swal("没有链接可以显示，API链接不要全部选中文件夹！");
                 gt.open({title: "API下载链接", type: "batch", list: rt, tip: a});
             }
         }
@@ -715,7 +715,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                             title: "下载链接（仅显示文件链接）",
                             type: "shareAriaLink",
                             list: t.list,
-                            tip: '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a  href="http://pan.baiduyun.wiki/down">XDown</a>',
+                            tip: '请将链接复制到支持Aria的下载器中, 推荐使用XDown',
                             showcopy: !0
                         });
                     } else swal(v.fail);
@@ -947,7 +947,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                             title: "下载链接（仅显示文件链接）",
                             type: "shareLink",
                             list: t.list,
-                            tip: '点击链接直接下载，请先升级 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a> 至 <b>v2.2.0</b>（出现403请先禁用IDM扩展，若仍失败请尝试Aria链接）',
+                            tip: '点击链接直接下载，（出现403请先禁用IDM扩展，若仍失败请尝试Aria链接）',
                             showcopy: !1
                         });
                     }
@@ -956,7 +956,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                             title: "下载链接（仅显示文件链接）",
                             type: "shareAriaLink",
                             list: t.list,
-                            tip: '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a  href="http://pan.baiduyun.wiki/down">XDown</a>',
+                            tip: '请将链接复制到支持Aria的下载器中, 推荐使用XDown',
                             showcopy: !1
                         });
                     }
@@ -983,7 +983,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                             title: "下载链接（仅显示文件链接）",
                             type: "rpcLink",
                             list: t.list,
-                            tip: '点击按钮发送链接至Aria下载器中 <a href="https://www.baiduyun.wiki/zh-cn/rpc.html">详细说明</a>，需配合最新版 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a>，支持本地和远程下载',
+                            tip: '点击按钮发送链接至Aria下载器中，支持本地和远程下载',
                             showcopy: !1
                         });
                     } else {
@@ -991,7 +991,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                             title: "下载链接（仅显示文件链接）",
                             type: "shareLink",
                             list: t.list,
-                            tip: '点击链接直接下载，请先升级 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a> 至 <b>v2.2.0</b>（出现403请先禁用IDM扩展，若仍失败请尝试Aria链接）',
+                            tip: '点击链接直接下载，（出现403请先禁用IDM扩展，若仍失败请尝试Aria链接）',
                             showcopy: !1
                         });
                     } else swal(v.fail);
@@ -1263,6 +1263,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         function i() {
             GM_setValue("SETTING_A", 0),
             GM_setValue("lastest_version", "9.9.9"),
+            b = "LogStatistic",
             GM_setValue("init", 1),
             e();
         }
