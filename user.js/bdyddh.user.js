@@ -89,8 +89,8 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             $(document).on("click", ".exe-download", function (t) {
                 t.target.innerText && Z(t.target.innerText);
             }), $(document).on("click", ".aria-rpc", function (t) {
-                var e = (t.target.dataset.link, t.target.dataset.filename), i = {};
-                j() || (i = {"User-Agent": b});
+                var e = (t.target.dataset.link, t.target.dataset.filename);//, i = {};
+                //j() || (i = {"User-Agent": b});
                 /*GM_xmlhttpRequest({
                     method: "HEAD",
                     headers: i,
@@ -106,7 +106,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                                 params: ["token:" + x.token, [i], {
                                     dir: x.dir,
                                     out: e,
-                                    header: ["User-Agent:" + j() ? y : b, "Cookie:BDUSS=" + x.bduss]
+                                    header: ["User-Agent:" + (j() ? y : b), "Cookie:BDUSS=" + x.bduss]
                                 }]
                             };
                             GM_xmlhttpRequest({
@@ -288,6 +288,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcToken" style="margin-right: 5px;flex: 0 0 90px;">密钥：</label><input type="text" id="rpcToken" value="' + x.token + '" class="swal-content__input" placeholder="没有留空"></div>',
                 t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="rpcDir" style="margin-right: 5px;flex: 0 0 90px;">下载路径：</label><input type="text" id="rpcDir" value="' + x.dir + '" class="swal-content__input" placeholder="默认为D:"></div>',
                 t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="mybduss" style="margin-right: 5px;flex: 0 0 90px;">BDUSS：</label><input type="text" id="mybduss" value="' + x.bduss + '" class="swal-content__input" placeholder=""></div>',
+                t += '<div style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 10px;"><label for="myapiid" style="margin-right: 5px;flex: 0 0 90px;">APIID：</label><input type="text" id="myapiid" value="' + x.apiid + '" class="swal-content__input" placeholder=""></div>',
                 t = "<div>" + t + "</div>";
             var e = $(t);
             swal({title: "RPC配置", closeOnClickOutside: !1, content: e[0], button: {text: "保存"}}).then(function () {
@@ -295,7 +296,9 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 GM_setValue("rpcPort", $("#rpcPort").val() ? $("#rpcPort").val() : x.port),
                 GM_setValue("rpcToken", $("#rpcToken").val()),
                 GM_setValue("rpcDir", $("#rpcDir").val() ? $("#rpcDir").val() : x.dir),
-                GM_setValue("mybduss", $("#mybduss").val() ? $("#mybduss").val() : x.bduss), history.go(0), swal({
+                GM_setValue("mybduss", $("#mybduss").val() ? $("#mybduss").val() : x.bduss),
+                GM_setValue("myapiid", $("#myapiid").val() ? $("#myapiid").val() : x.apiid),
+                    history.go(0), swal({
                     text: "保存成功",
                     timer: 800
                 });
@@ -585,7 +588,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         location.protocol;
         this.init = function () {
             if (et = unsafeWindow.yunData, t("初始化信息:", et), void 0 === et) return void t("页面未正常加载，或者百度已经更新！");
-            m = 1 === et.ISSVIP ? 250528 : 778750, e(), l(), M(), T(), tt(), gt = new c({addCopy: !0}), t("下载助手加载成功！当前版本：", h);
+            m = x.apiid ? x.apiid : 1 === et.ISSVIP ? 250528 : 778750, e(), l(), M(), T(), tt(), gt = new c({addCopy: !0}), t("下载助手加载成功！当前版本：", h);
         };
     }
 
@@ -1070,7 +1073,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             _t = location.protocol + "//" + location.host + "/share/list";
         this.init = function () {
             if (GM_getValue("SETTING_P") && i(), Q = unsafeWindow.yunData, t("初始化信息:", Q), void 0 === Q) return void t("页面未正常加载，或者百度已经更新！");
-            m = 1 === Q.ISSVIP ? 250528 : 778750, e(), g(), bt = new c({addCopy: !1}), yt = new p(H, K), G(), M(), a() || U(), t("下载助手加载成功！当前版本：", h);
+            m = x.apiid ? x.apiid : 1 === Q.ISSVIP ? 250528 : 778750, e(), g(), bt = new c({addCopy: !1}), yt = new p(H, K), G(), M(), a() || U(), t("下载助手加载成功！当前版本：", h);
         };
     }
 
@@ -1365,6 +1368,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             port: GM_getValue("rpcPort") ? GM_getValue("rpcPort") : 6800,
             token: GM_getValue("rpcToken") ? GM_getValue("rpcToken") : "",
             dir: GM_getValue("rpcDir") ? GM_getValue("rpcDir") : "D:/",
+            apiid: GM_getValue("myapiid") ? GM_getValue("myapiid") : 0,
             bduss: GM_getValue("mybduss") ? GM_getValue("mybduss") : "BDUSS"
         };
     $(function () {
